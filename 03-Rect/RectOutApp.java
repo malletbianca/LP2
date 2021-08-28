@@ -21,7 +21,7 @@ class Rect {
         this.h = hh;
     }
   
-    int calculaArea () {
+    int area () {
     	return w * h;
     }
 
@@ -33,6 +33,6 @@ class Rect {
     void print () {
         System.out.format("Retangulo de tamanho (%d,%d) na nova posicao (%d,%d).\n",
             this.w, this.h, this.x, this.y);
-        System.out.format("Area do retangulo (%d).\n", this.calculaArea());
+        System.out.format("Area do retangulo (%d).\n", this.area());
     }
 }
