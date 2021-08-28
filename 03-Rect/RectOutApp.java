@@ -13,7 +13,6 @@ public class RectOutApp {
 class Rect {
     int x, y;
     int w, h;
-    int dx, dy;
 
     Rect (int xx, int yy, int ww, int hh) {
         this.x = xx;
@@ -26,11 +25,9 @@ class Rect {
     	return w * h;
     }
 
-    void drag (int dxx, int dyy) {
-        this.dx = dxx;
-        this.dy = dyy;
-        x = x + dx;
-        y = y + dy;
+    void drag (int dx, int dy) {
+        x += dx;
+        y += dy;
     }
 
     void print () {
