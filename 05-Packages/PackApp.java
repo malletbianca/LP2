@@ -27,8 +27,8 @@ class PackFrame extends JFrame {
         this.setTitle("Java Packages");
         this.setSize(1000, 400);
         this.r1 = new Rect(680,100, 200,200);
-        this.e1 = new Ellipse(400,100, 210,210);
-        this.t1 = new Triangle(250,350,150, 100,300,300);
+        this.e1 = new Ellipse(400,100, 200,200);
+        this.t1 = new Triangle(235,350,120, 100,300,300);
     }
 
     public void paint (Graphics g) {
