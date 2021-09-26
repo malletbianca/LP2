@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import figures.*;
+import figures.figure1d.*;
+import figures.figure2d.*;
 
 class EditorGraficoApp {
     public static void main (String[] args) {
@@ -14,8 +16,7 @@ class EditorGraficoApp {
 }
 
 class ListFrame extends JFrame {
-    ArrayList<Rect> rs = new ArrayList<Rect>();
-    ArrayList<Ellipse> es = new ArrayList<Ellipse>();
+    ArrayList<Figure> figs = new ArrayList<Figure>();
     Random rand = new Random();
 
     ListFrame () {
@@ -30,43 +31,30 @@ class ListFrame extends JFrame {
         this.addKeyListener (
             new KeyAdapter() {
                 public void keyPressed (KeyEvent evt) {
+                    int x = rand.nextInt(500);
+                    int y = rand.nextInt(500);
+                    int rot = 0;
+                    int width = rand.nextInt(100 + 1 - 10) + 10; //int randomNumber = random.nextInt(max + 1 - min) + min;
+                    int height = rand.nextInt(100 + 1 - 10) + 10;
+                    int rFill = rand.nextInt(255);
+                    int gFill = rand.nextInt(255);
+                    int bFill = rand.nextInt(255);
+                    int stroke = rand.nextInt(7);
+                    int rStroke = rand.nextInt(255);
+                    int gStroke = rand.nextInt(255);
+                    int bStroke = rand.nextInt(255);
                     if (evt.getKeyChar() == 'r') {
-                        int x = rand.nextInt(500);
-                        int y = rand.nextInt(500);
-                        int width = rand.nextInt(100);
-                        int height = rand.nextInt(100);
-                        int rFill = rand.nextInt(255);
-                        int gFill = rand.nextInt(255);
-                        int bFill = rand.nextInt(255);
-                        int stroke = rand.nextInt(3);
-                        int rStroke = rand.nextInt(255);
-                        int gStroke = rand.nextInt(255);
-                        int bStroke = rand.nextInt(255);
-                        rs.add(new Rect(x,y, width,height, rFill,gFill,bFill, stroke, rStroke,gStroke,bStroke));
-                        repaint();
+                        figs.add(new Rect(x,y, rot, stroke, rStroke,gStroke,bStroke, width,height, rFill,gFill,bFill));
+                    } else if (evt.getKeyChar() == 'e') {
+                        figs.add(new Ellipse(x,y, rot, stroke, rStroke,gStroke,bStroke, width,height, rFill,gFill,bFill));
+                    } else if (evt.getKeyChar() == 't') {
+                        figs.add(new Triangle(x,y, rot, stroke, rStroke,gStroke,bStroke, width,height, rFill,gFill,bFill));
+                    } else if (evt.getKeyChar() == 'l') {
+                        figs.add(new Line(x,y, rot, stroke, rStroke,gStroke,bStroke, width));
+                    } else if (evt.getKeyChar() == 'd') {
+                        figs.add(new Dot(x,y, rot, stroke, rStroke,gStroke,bStroke));
                     }
-                }
-            }
-        );
-
-        this.addKeyListener (
-            new KeyAdapter() {
-                public void keyPressed (KeyEvent evt) {
-                    if (evt.getKeyChar() == 'e') {
-                        int x = rand.nextInt(500);
-                        int y = rand.nextInt(500);
-                        int width = rand.nextInt(100);
-                        int height = rand.nextInt(100);
-                        int rFill = rand.nextInt(255);
-                        int gFill = rand.nextInt(255);
-                        int bFill = rand.nextInt(255);
-                        int stroke = rand.nextInt(3);
-                        int rStroke = rand.nextInt(255);
-                        int gStroke = rand.nextInt(255);
-                        int bStroke = rand.nextInt(255);
-                        es.add(new Ellipse(x,y, width,height, rFill,gFill,bFill, stroke, rStroke,gStroke,bStroke));
-                        repaint();
-                    }
+                    repaint();
                 }
             }
         );
@@ -77,11 +65,8 @@ class ListFrame extends JFrame {
 
     public void paint (Graphics g) {
         super.paint(g);
-        for (Rect r: this.rs) {
-            r.paint(g);
-        }
-        for (Ellipse e: this.es) {
-            e.paint(g);
+        for (Figure fig: this.figs) {
+            fig.paint(g);
         }
     }
 }
