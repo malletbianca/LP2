@@ -130,7 +130,7 @@ class ListFrame extends JFrame {
                             selected.scale(-3,-3);
 
                         // Evento para mudar cor da figura
-                        } else if (evt.getKeyChar() == 'c') {
+                        } else if (evt.getKeyChar() == 'c' || evt.getKeyChar() == 'C') {
                             selected.randomColor(rFill, gFill, bFill);
                         }
                     }
