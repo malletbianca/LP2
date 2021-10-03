@@ -46,6 +46,12 @@ public class Triangle extends Figure2D {
 
         triangle.xpoints = new int[] {this.x + (this.width/2), this.width + this.x, this.x};
         triangle.ypoints = new int[] {this.y, (this.height + this.y), (this.height + this.y)};
+        
+        // Evita que a figura seja reduzida indefinidamente
+        if (this.width < 5) {
+            this.width -= scaleWidth;
+            this.height -= scaleHeight;
+        }
     }
 
     public void addSelection(Graphics g) {
