@@ -40,10 +40,11 @@ class ListFrame extends JFrame {
                         if (fig.clicked(mousePosition.x, mousePosition.y)) {
                             //System.out.println("Clicou em uma figura");
                             selected = fig;
-                            figs.remove(fig);
-                            figs.add(selected); // Adiciona na posição mais próxima
-                            repaint();
                         }
+                    }
+                    if (selected != null) {
+                        figs.remove(selected);
+                        figs.add(selected); // Adiciona na posição mais próxima
                     }
                     repaint();
                 }
@@ -106,6 +107,8 @@ class ListFrame extends JFrame {
                             }
                         } else {
                             selected = figs.get((figs.indexOf(selected) + 1) % figs.size());
+                            figs.remove(selected);
+                            figs.add(selected);
                         }
                     }
 
