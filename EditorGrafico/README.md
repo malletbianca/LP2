@@ -16,7 +16,7 @@ Pressionada a tecla específica, a figura correspondente é criada no local da m
 Sempre que uma figura é criada, o foco muda para ela; a figura em foco pode ser identifica pelo **contorno vermelho**.
 As figuras são criadas com cores randômicas. O foco de uma figura pode ser mudado de duas formas:
 - Clicando com o mouse diretamente na figura desejada
-- Através da tecla 'TAB', que muda a figura em foco cada vez que a tecla é pressionada
+- Através da tecla '/', que muda a figura em foco cada vez que a tecla é pressionada
 
 ### Eventos para figuras em foco
 - Tecla 'c' ou 'C': Muda a cor da figura randomicamente
