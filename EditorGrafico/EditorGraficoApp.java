@@ -12,7 +12,6 @@ class EditorGraficoApp {
     public static void main (String[] args) {
         ListFrame frame = new ListFrame();
         frame.setVisible(true);
-        frame.setFocusTraversalKeysEnabled(false);
     }
 }
 
@@ -68,7 +67,7 @@ class ListFrame extends JFrame {
         this.addKeyListener (
             new KeyAdapter() {
                 public void keyPressed (KeyEvent evt) {
-                    Point m = getMousePosition();
+                    Point m = MouseInfo.getPointerInfo().getLocation();
                     int x = m.x - getLocation().x;
                     int y = m.y - getLocation().y;
                     int width = 60;
@@ -100,7 +99,7 @@ class ListFrame extends JFrame {
                     }
 
                     // Seleção da figura em foco pelo teclado
-                    if (evt.getKeyCode() == KeyEvent.VK_TAB) {
+                    if (evt.getKeyChar() == '/') {
                         if (selected == null) {
                             if (figs.size() > 0) {
                                 selected = figs.get(0);
