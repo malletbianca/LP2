@@ -9,12 +9,12 @@ typedef struct {
 struct Figure;
 typedef void    (* Figure_Print) (struct Figure*);
 typedef float   (* Figure_Area)  (struct Figure*);
-typedef int     (* Figure_Drag)  (struct Figure*);
+typedef int     (* Figure_Drag)  (struct Figure*, int dx, int dy);
 
 typedef struct {
     void    (* print) (struct Figure*);
     float   (* area)  (struct Figure*);
-    int     (* drag)  (struct Figure*);
+    int     (* drag)  (struct Figure*, int dx, int dy);
 } Figure_vtable;
 
 typedef struct Figure {
@@ -33,10 +33,10 @@ typedef struct {
 
 void Triangle_print (Triangle* this) {
     Figure* sup = (Figure*) this;
-    printf("Triangulo de base (%d) e altura (%d) na posicao (%d,%d).\n", this->width, this->height, sup->x, sup->y);
+    printf("Triangulo de base (%d) e altura (%d) na nova posicao (%d,%d).\n", this->width, this->height, sup->x, sup->y);
     printf("Contorno de tamanho (%d) e cor (R%d, G%d, B%d).\nCor de preenchimento (R%d, G%d, B%d)\n",
            sup->stroke, sup->strokeColor.r, sup->strokeColor.g, sup->strokeColor.b, this->fillColor.r, this->fillColor.g, this->fillColor.b);
-    printf("Triangulo de area (%.1f)\n", sup->vtable->area(sup)); sup->vtable->drag(sup);
+    printf("Triangulo de area (%.1f).\n\n", sup->vtable->area(sup));
 }
 
 float Triangle_area (Triangle* this) {
@@ -46,10 +46,8 @@ float Triangle_area (Triangle* this) {
 
 void Triangle_drag (Triangle* this, int dx, int dy) {
     Figure* sup = (Figure*) this;
-    dx = dy = 10;
     sup->x += dx;
     sup->y += dy;
-    printf("Nova posicao (%d, %d)\n\n", sup->x, sup->y);
 }
 
 Figure_vtable triangle_vtable = {
@@ -80,10 +78,10 @@ typedef struct {
 
 void Ellipse_print (Ellipse* this) {
     Figure* sup = (Figure*) this;
-    printf("Elipse de tamanho (%d,%d) na posicao (%d,%d).\n", this->width, this->height, sup->x, sup->y);
+    printf("Elipse de tamanho (%d,%d) na nova posicao (%d,%d).\n", this->width, this->height, sup->x, sup->y);
     printf("Contorno de tamanho (%d) e cor (R%d, G%d, B%d).\nCor de preenchimento (R%d, G%d, B%d)\n",
            sup->stroke, sup->strokeColor.r, sup->strokeColor.g, sup->strokeColor.b, this->fillColor.r, this->fillColor.g, this->fillColor.b);
-    printf("Elipse de area (%.1f)\n", sup->vtable->area(sup)); sup->vtable->drag(sup);
+    printf("Elipse de area (%.1f).\n\n", sup->vtable->area(sup));
 }
 
 float Ellipse_area (Ellipse* this) {
@@ -93,10 +91,8 @@ float Ellipse_area (Ellipse* this) {
 
 void Ellipse_drag (Ellipse* this, int dx, int dy) {
     Figure* sup = (Figure*) this;
-    dx = dy = 10;
     sup->x += dx;
     sup->y += dy;
-    printf("Nova posicao (%d, %d)\n\n", sup->x, sup->y);
 }
 
 Figure_vtable ellipse_vtable = {
@@ -134,6 +130,7 @@ void main (void) {
     };
 
     for (int i = 0; i < 4; i++) {
+        figs[i]->vtable->drag(figs[i], 5, 5);
         figs[i]->vtable->print(figs[i]);
     }
 
