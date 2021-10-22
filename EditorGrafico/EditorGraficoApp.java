@@ -7,6 +7,7 @@ import java.util.Random;
 import figures.*;
 import figures.figure1d.*;
 import figures.figure2d.*;
+import interfaces.*;
 
 class EditorGraficoApp {
     public static void main (String[] args) {
@@ -141,8 +142,14 @@ class ListFrame extends JFrame {
             }
         );
 
+        // Ajusta editor para tamanho da tela do usuário
+        GraphicsDevice g2d = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+
+        int screenWidth = g2d.getDisplayMode().getWidth();
+        int screenHeight = g2d.getDisplayMode().getHeight();
+
         this.setTitle("Editor Grafico");
-        this.setSize(500, 500);
+        this.setSize(screenWidth, screenHeight);
     }
 
     public void paint (Graphics g) {
