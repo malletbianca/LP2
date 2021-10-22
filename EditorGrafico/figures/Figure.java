@@ -1,8 +1,9 @@
 package figures;
 
 import java.awt.Graphics;
+import interfaces.*;
 
-public abstract class Figure {
+public abstract class Figure implements IVisible {
     public int x, y;
     public int stroke;
     public int rStroke, gStroke, bStroke;
@@ -20,15 +21,11 @@ public abstract class Figure {
         this.x += distanceX;
         this.y += distanceY;
     }
-
-    public abstract boolean clicked (int mouseX, int mouseY);
     
     public abstract void scale (int scaleWidth, int scaleHeight);
 
-    public abstract void paint (Graphics g);
-
-    public abstract void addSelection(Graphics g);
+    public abstract void addSelection (Graphics g);
 
     public abstract void randomColor (int r, int g, int b);
-    
+
 }
