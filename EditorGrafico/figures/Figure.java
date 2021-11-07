@@ -4,9 +4,9 @@ import java.awt.Graphics;
 import interfaces.*;
 
 public abstract class Figure implements IVisible {
-    public int x, y;
-    public int stroke;
-    public int rStroke, gStroke, bStroke;
+    protected int x, y;
+    protected int stroke;
+    protected int rStroke, gStroke, bStroke;
 
     public Figure (int x, int y, int stroke, int rStroke, int gStroke, int bStroke) {
     	this.x = x;
