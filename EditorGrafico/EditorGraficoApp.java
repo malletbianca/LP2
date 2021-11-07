@@ -8,6 +8,7 @@ import figures.*;
 import figures.figure1d.*;
 import figures.figure2d.*;
 import interfaces.*;
+import buttons.*;
 
 class EditorGraficoApp {
     public static void main (String[] args) {
