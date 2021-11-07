@@ -6,7 +6,7 @@ import java.awt.Polygon;
 import java.awt.Graphics;
 
 public class Triangle extends Figure2D {
-    Polygon triangle;
+    private Polygon triangle;
     
     public Triangle (int x, int y, int stroke, int rStroke, int gStroke, int bStroke, int width, int height, int rFill, int gFill, int bFill) {
         super(x,y, stroke, rStroke, gStroke, bStroke, width, height, rFill, gFill, bFill);
@@ -17,7 +17,7 @@ public class Triangle extends Figure2D {
         triangle.npoints = 3;
     }
 
-    public void paint (Graphics g) {
+    public void paint (Graphics g, boolean focused) {
         Graphics2D g2d = (Graphics2D) g;
 
         g2d.setColor(new Color(this.rFill, this.gFill, this.bFill));
