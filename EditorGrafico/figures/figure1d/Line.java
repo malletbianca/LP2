@@ -5,7 +5,7 @@ import java.awt.*;
 import java.awt.Graphics;
 
 public class Line extends Figure {
-    int width;
+    private int width;
 
     public Line (int x, int y, int width, int stroke, int rStroke, int gStroke, int bStroke) {
         super(x,y, stroke, rStroke, gStroke, bStroke);
@@ -13,7 +13,7 @@ public class Line extends Figure {
         this.stroke = 3;
     }
 
-    public void paint (Graphics g) {
+    public void paint (Graphics g, boolean focused) {
         Graphics2D g2d = (Graphics2D) g;
         g2d.setColor(new Color(this.rStroke, this.gStroke, this.bStroke));
         g2d.setStroke(new BasicStroke(this.stroke));
