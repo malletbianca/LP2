@@ -11,7 +11,7 @@ public class Dot extends Figure {
         this.stroke = 8;
     }
 
-    public void paint (Graphics g) {
+    public void paint (Graphics g, boolean focused) {
         Graphics2D g2d = (Graphics2D) g;
         g2d.setColor(new Color(this.rStroke, this.gStroke, this.bStroke));
         g2d.fillOval(this.x - (this.stroke/2),this.y - (this.stroke/2), this.stroke,this.stroke);
