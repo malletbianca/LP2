@@ -10,7 +10,7 @@ public class Rect extends Figure2D {
         super(x,y, width,height, stroke, rStroke, gStroke, bStroke, rFill, gFill, bFill);
     }
 
-    public void paint (Graphics g) {
+    public void paint (Graphics g, boolean focused) {
         Graphics2D g2d = (Graphics2D) g;
         g2d.setColor(new Color(this.rFill, this.gFill, this.bFill));
         g2d.fillRect(this.x,this.y, this.width,this.height);
