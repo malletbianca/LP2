@@ -18,11 +18,20 @@ class EditorGraficoApp {
 
 class ListFrame extends JFrame {
     ArrayList<Figure> figs = new ArrayList<Figure>();
+    ArrayList<Control> buttons = new ArrayList<Control>();
+
     Random rand = new Random();
     Figure selected = null;
+    Control buttonSelected = null;
     Point mousePosition = null;
 
     ListFrame () {
+        buttons.add(new Control(0, new Rect(40,60, 30,30, 1, 255,255,255, 200,200,200)));
+        buttons.add(new Control(1, new Ellipse(40,110, 30,30, 1, 255,255,255, 200,200,200)));
+        buttons.add(new Control(2, new Triangle(40,160, 30,30, 1, 255,255,255, 200,200,200)));
+        buttons.add(new Control(3, new Line(40,225, 30, 1, 255,255,255)));
+        buttons.add(new Control(4, new Dot(55,275, 1, 255,255,255)));
+        
         this.addWindowListener (
             new WindowAdapter() {
                 public void windowClosing (WindowEvent e) {
@@ -36,16 +45,25 @@ class ListFrame extends JFrame {
                 public void mousePressed(MouseEvent evt) {
                     mousePosition = evt.getPoint();
                     selected = null;
+                    buttonSelected = null;
                     
+                    // Figuras
                     for (Figure fig: figs) {
                         if (fig.clicked(mousePosition.x, mousePosition.y)) {
-                            //System.out.println("Clicou em uma figura");
                             selected = fig;
                         }
                     }
                     if (selected != null) {
                         figs.remove(selected);
                         figs.add(selected); // Adiciona na posição mais próxima
+                    }
+                    repaint();
+                    
+                    // Botões
+                    for (Control button: buttons) {
+                        if (button.clicked(mousePosition.x, mousePosition.y)) {
+                            buttonSelected = button;
+                        }
                     }
                     repaint();
                 }
@@ -154,11 +172,16 @@ class ListFrame extends JFrame {
 
     public void paint (Graphics g) {
         super.paint(g);
+        
         for (Figure fig: this.figs) {
-            fig.paint(g);
+            fig.paint(g, fig == selected);
             if (fig == selected) {
                 selected.addSelection(g);
             }
+        }
+
+        for (Control button: this.buttons) {
+            button.paint(g, button == buttonSelected);
         }
     }
 }
