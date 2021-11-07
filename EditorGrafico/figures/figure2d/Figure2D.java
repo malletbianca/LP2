@@ -4,8 +4,8 @@ import figures.*;
 import java.awt.Graphics;
 
 public abstract class Figure2D extends Figure {
-    public int width, height;
-    public int rFill, gFill, bFill;
+    int width, height;
+    int rFill, gFill, bFill;
 
     public Figure2D (int x, int y, int width, int height, int stroke, int rStroke, int gStroke, int bStroke, int rFill, int gFill, int bFill) {
     	super(x,y, stroke, rStroke, gStroke, bStroke);
