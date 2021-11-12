@@ -9,7 +9,7 @@ import interfaces.IVisible;
 public class Control implements IVisible {
     private int x, y;
     private int size = 50;
-    private int idx;
+    public int idx;
     private Figure figButton;
 
     public Control (int idx, Figure figButton) {
