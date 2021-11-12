@@ -9,8 +9,8 @@ import interfaces.IVisible;
 public class Control implements IVisible {
     private int x, y;
     private int size = 50;
-    public int idx;
     private Figure figButton;
+    private int idx;
 
     public Control (int idx, Figure figButton) {
         this.idx = idx;
@@ -38,10 +38,13 @@ public class Control implements IVisible {
         }
 
         this.figButton.paint(g, true);
-        
     }
 
     public boolean clicked (int mouseX, int mouseY) {
         return (mouseX >= this.x) && (mouseX <= this.x + this.size) && (mouseY >= this.y) && (mouseY <= this.size + (this.size * this.idx + 50));
+    }
+
+    public int getIdx() {
+        return this.idx;
     }
 }
