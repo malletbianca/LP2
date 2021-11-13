@@ -1,6 +1,7 @@
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -25,29 +26,108 @@ class ListFrame extends JFrame {
     Figure selected = null;
     Control buttonSelected = null;
     Point mousePosition = null;
+    boolean buttonClicked = false;
 
     ListFrame () {
+        try {
+            FileInputStream f = new FileInputStream("proj.bin");
+            ObjectInputStream o = new ObjectInputStream(f);
+            this.figs = (ArrayList<Figure>) o.readObject();
+            o.close();
+        } catch (Exception x) {
+            System.out.println("Erro ao abrir arquivo");
+        }
+
+        this.addWindowListener (
+            new WindowAdapter() {
+                public void windowClosing (WindowEvent e) {
+                    try {
+                        FileOutputStream f = new FileOutputStream("proj.bin");
+                        ObjectOutputStream o = new ObjectOutputStream(f);
+                        o.writeObject(figs);
+                        o.flush();
+                        o.close();
+                    } catch (Exception x) {
+                        System.out.println("Erro ao escrever arquivo");
+                    }
+                    System.exit(0);
+                }
+            }
+        );
+
         buttons.add(new Control(0, new Rect(40,60, 30,30, 1, 255,255,255, 200,200,200)));
         buttons.add(new Control(1, new Ellipse(40,110, 30,30, 1, 255,255,255, 200,200,200)));
         buttons.add(new Control(2, new Triangle(40,160, 30,30, 1, 255,255,255, 200,200,200)));
         buttons.add(new Control(3, new Line(40,225, 30, 1, 255,255,255)));
         buttons.add(new Control(4, new Dot(55,275, 1, 255,255,255)));
-        
-        this.addWindowListener (
-            new WindowAdapter() {
-                public void windowClosing (WindowEvent e) {
-                    System.exit(0);
-                }
-            }
-        );
 
         this.addMouseListener (
             new MouseAdapter() {
                 public void mousePressed(MouseEvent evt) {
                     mousePosition = evt.getPoint();
                     selected = null;
+
+                    // Executa só se tiver algum botão selecionado
+                    if (buttonSelected != null) {
+                        // Confere se o clique seguinte é dentro de um botão
+                        buttonClicked = false;
+                        for (Control button: buttons) {
+                            if (button.clicked(mousePosition.x, mousePosition.y)) {
+                                buttonClicked = true;
+                            }
+                        }
+                        
+                        // Só executa se o clique seguinte for fora de um botão
+                        if (buttonClicked == false) {  
+                            Point p = MouseInfo.getPointerInfo().getLocation();
+                            int x = p.x - getLocation().x;
+                            int y = p.y - getLocation().y;
+                            int width = 60;
+                            int height = 60;
+                            int stroke = 0;
+                            int rStroke = rand.nextInt(255);
+                            int gStroke = rand.nextInt(255);
+                            int bStroke = rand.nextInt(255);
+                            int rFill = rand.nextInt(255);
+                            int gFill = rand.nextInt(255);
+                            int bFill = rand.nextInt(255);
+
+                            switch (buttonSelected.getIdx()) {
+                                case 0:
+                                    selected = new Rect(x,y, width,height, stroke, rStroke,gStroke,bStroke, rFill,gFill,bFill);
+                                    figs.add(selected);
+                                    break;
+                                case 1:
+                                    selected = new Ellipse(x,y, width,height, stroke, rStroke,gStroke,bStroke, rFill,gFill,bFill);
+                                    figs.add(selected);
+                                    break;
+                                case 2:
+                                    selected = new Triangle(x,y, width,height, stroke, rStroke,gStroke,bStroke, rFill,gFill,bFill);
+                                    figs.add(selected);
+                                    break;
+                                case 3:
+                                    selected = new Line(x,y, width, stroke, rStroke,gStroke,bStroke);
+                                    figs.add(selected);
+                                    break;
+                                case 4:
+                                    selected = new Dot(x,y, stroke, rStroke,gStroke,bStroke);
+                                    figs.add(selected);
+                                    break;
+                                default:
+                            }
+                        }
+                    }
+
                     buttonSelected = null;
-                    
+
+                    // Executa para conferir se clicou em algum botão
+                    for (Control button: buttons) {
+                        if (button.clicked(mousePosition.x, mousePosition.y)) {
+                            buttonSelected = button;
+                        }
+                    }
+                    repaint();
+
                     // Figuras
                     for (Figure fig: figs) {
                         if (fig.clicked(mousePosition.x, mousePosition.y)) {
@@ -57,14 +137,6 @@ class ListFrame extends JFrame {
                     if (selected != null) {
                         figs.remove(selected);
                         figs.add(selected); // Adiciona na posição mais próxima
-                    }
-                    repaint();
-                    
-                    // Botões
-                    for (Control button: buttons) {
-                        if (button.clicked(mousePosition.x, mousePosition.y)) {
-                            buttonSelected = button;
-                        }
                     }
                     repaint();
                 }
@@ -88,35 +160,51 @@ class ListFrame extends JFrame {
         this.addKeyListener (
             new KeyAdapter() {
                 public void keyPressed (KeyEvent evt) {
-                    Point m = MouseInfo.getPointerInfo().getLocation();
-                    int x = m.x - getLocation().x;
-                    int y = m.y - getLocation().y;
-                    int width = 60;
-                    int height = 60;
-                    int stroke = 0;
-                    int rStroke = rand.nextInt(255);
-                    int gStroke = rand.nextInt(255);
-                    int bStroke = rand.nextInt(255);
                     int rFill = rand.nextInt(255);
                     int gFill = rand.nextInt(255);
                     int bFill = rand.nextInt(255);
 
-                    // Eventos de criação de figura
-                    if (evt.getKeyChar() == 'r' || evt.getKeyChar() == 'R') {
-                        selected = new Rect(x,y, width,height, stroke, rStroke,gStroke,bStroke, rFill,gFill,bFill);
-                        figs.add(selected);
-                    } else if (evt.getKeyChar() == 'e' || evt.getKeyChar() == 'E') {
-                        selected = new Ellipse(x,y, width,height, stroke, rStroke,gStroke,bStroke, rFill,gFill,bFill);
-                        figs.add(selected);
-                    } else if (evt.getKeyChar() == 't' || evt.getKeyChar() == 'T') {
-                        selected = new Triangle(x,y, width,height, stroke, rStroke,gStroke,bStroke, rFill,gFill,bFill);
-                        figs.add(selected);
-                    } else if (evt.getKeyChar() == 'l' || evt.getKeyChar() == 'L') {
-                        selected = new Line(x,y, width, stroke, rStroke,gStroke,bStroke);
-                        figs.add(selected);
-                    } else if (evt.getKeyChar() == 'd' || evt.getKeyChar() == 'D') {
-                        selected = new Dot(x,y, stroke, rStroke,gStroke,bStroke);
-                        figs.add(selected);
+                    // Altera botão selecionado de acordo com tecla selecionada
+                    switch (evt.getKeyChar()) {
+                        case 'r': case 'R':
+                            for (Control button: buttons) {
+                                if (button.getIdx() == 0) {
+                                    buttonSelected = button;
+                                }
+                            }
+                            break;
+                        case 'e': case 'E':
+                            for (Control button: buttons) {
+                                if (button.getIdx() == 1) {
+                                    buttonSelected = button;
+                                }
+                            }
+                            break;
+                        case 't': case 'T':
+                            for (Control button: buttons) {
+                                if (button.getIdx() == 2) {
+                                    buttonSelected = button;
+                                }
+                            }
+                            break;
+                        case 'l': case 'L':
+                            for (Control button: buttons) {
+                                if (button.getIdx() == 3) {
+                                    buttonSelected = button;
+                                }
+                            }
+                            break;
+                        case 'd': case 'D':
+                            for (Control button: buttons) {
+                                if (button.getIdx() == 4) {
+                                    buttonSelected = button;
+                                }
+                            }
+                            break;
+                        case KeyEvent.VK_ESCAPE:
+                            buttonSelected = null;
+                            break;
+                        default:
                     }
 
                     // Seleção da figura em foco pelo teclado
@@ -173,7 +261,7 @@ class ListFrame extends JFrame {
 
     public void paint (Graphics g) {
         super.paint(g);
-        
+
         for (Figure fig: this.figs) {
             fig.paint(g, fig == selected);
             if (fig == selected) {
