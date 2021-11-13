@@ -1,19 +1,22 @@
-# LP2: Projeto 1/2
-Primeira metade do projeto de editor gráfico vetorial.
-O editor cria figuras entre as 5 disponíveis — ponto, linha, retângulo, elipse e triângulo —, quando acionadas as teclas específicas para cada uma.
+# LP2: Projeto 2/2
+Projeto de editor gráfico vetorial.
+O editor cria figuras entre as 5 disponíveis — ponto, linha, retângulo, elipse e triângulo —, através do clique, quando acionada a opção específica para cada uma das figuras no menu de ferramentas.
 
 Também é possível arrastar, aumentar e diminuir o tamanho, alternar a cor e excluir uma figura em foco.
 
 ###  Criação de figuras
-Pressionada a tecla específica, a figura correspondente é criada no local da moldura onde está o **cursor do mouse**.
-- Tecla 'd' ou 'D': Cria ponto
-- Tecla 'l' ou 'L': Cria linha
-- Tecla 'r' ou 'R': Cria retângulo
-- Tecla 'e' ou 'E': Cria elipse
-- Tecla 't' ou 'T': Cria triângulo
+É preciso selecionar a figura desejada no menu de seleção. A figura que corresponde ao botão em foco é criada, apenas através do **clique**, no local da moldura onde está o **cursor do mouse**. Para criar uma nova figura, é preciso que um botão seja selecionado novamente.
+
+Além disso, existem teclas específicas que funcionam como **atalhos** para o menu de botões. Os comandos são os seguintes:
+- Tecla 'd' ou 'D': Atalho para ponto
+- Tecla 'l' ou 'L': Atalho para linha
+- Tecla 'r' ou 'R': Atalho para retângulo
+- Tecla 'e' ou 'E': Atalho para elipse
+- Tecla 't' ou 'T': Atalho para triângulo
+- Tecla 'ESC': Desabilita qualquer botão em foco no menu de figuras
 
 ### Seleção de figura em foco
-Sempre que uma figura é criada, o foco muda para ela; a figura em foco pode ser identifica pelo **contorno vermelho**.
+Sempre que uma figura é criada, o foco muda para ela; a figura em foco pode ser identificada pelo **contorno vermelho**.
 As figuras são criadas com cores randômicas. O foco de uma figura pode ser mudado de duas formas:
 - Clicando com o mouse diretamente na figura desejada
 - Através da tecla '/', que muda a figura em foco cada vez que a tecla é pressionada
